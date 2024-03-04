@@ -46,6 +46,27 @@ Remarque : faire "Y" pour que cette version devienne celle par défaut.
     java -version
     
 
+✅ Installation de la version 8 de Java pour cassandra 3.11.x : 
+
+    which python2 
+    
+    sudo apt-get install python2
+
+    python2 -V
+    
+
+✅ Mise à jour du Path : 
+   
+    echo $PATH
+    
+    export PATH="/home/gitpod/.pyenv/bin:$PATH"
+    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
+    export PATH="$GITPOD_REPO_ROOT/capache-cassandra-3.11.16/bin:$PATH"
+    export PATH="$GITPOD_REPO_ROOT/apache-cassandra-3.11.16/tools/bin:$PATH"
+
+    echo $PATH 
+
+
 ✅ Installation de cassandra 3.11.x : 
 
 Téléchargement du tarball avec les binaires sur l'un des sites miroirs de la fondation Apache : 
@@ -138,33 +159,6 @@ Cela lancera Cassandra comme user Linux authentifié.
 ✅ On installa CQLSH :
 
     pip install -U cqlsh
-
-    export PATH="/home/gitpod/.pyenv/bin:$PATH"
-
-    echo $PATH 
-
-    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
-    export PATH="$GITPOD_REPO_ROOT/capache-cassandra-3.11.16/bin:$PATH"
-    export PATH="$GITPOD_REPO_ROOT/apache-cassandra-3.11.16/tools/bin:$PATH"
-    
-    which python2 
-    
-    Python 2.7.18
-    
-Download Python 2.7.18 :
-
-    sudo apt-get install python2
-
-Extract the downloaded archive:
-tar xzvf Python-2.7.18.tgz
-
-Run the following script to install Python:
-cd Python-2.7.18
-./configure && make && make altinstall
-
-Create a syslink for Python from Python 2.7.18:
-cd /usr/local/bin
-ln -s python2.7 python
 
     
 ✅ On lance une session de shell CQL :
