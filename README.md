@@ -28,9 +28,9 @@ _ Pour aller plus loin : [https://www.datastax.com/learn/whats-new-for-cassandra
 
 **********************************************************************************************************************************
 
-## Option 1 : Pour lancer notre TP : sur un environnement sans cassandra 3.x préinstallé  :
+## Pour lancer notre TP  (environnement sans cassandra 3.x préinstallé)  :
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/crystalloide/Cassandra-Migration-Cassandra-3-vers-Cassandra-4/)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/crystalloide/Cassandra_Migration_Cassandra_4.x)
 
 **********************************************************************************************************************************
 
