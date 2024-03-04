@@ -34,6 +34,10 @@ _ Pour aller plus loin : [https://www.datastax.com/learn/whats-new-for-cassandra
 
 **********************************************************************************************************************************
 
+✅ Installation de la version 8 de Java pour cassandra 3.11.x : 
+
+    sdk install java 8.0.345.fx-zulu
+
 
 ✅ Vérification de la version de Java : 
 
@@ -87,7 +91,7 @@ Located in the tarball installation location are the directories for the scripts
 
 ✅ Lancement de Cassandra : 
 
-    cd apache-cassandra-3.11/ && bin/cassandra
+    cd apache-cassandra-3.11.16/ && bin/cassandra
     
 This will run Cassandra as the authenticated Linux user.
 
