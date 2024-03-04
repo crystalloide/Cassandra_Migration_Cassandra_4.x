@@ -122,7 +122,7 @@ Cela lancera Cassandra comme user Linux authentifié.
 
 ✅ Suivi du lancement de Cassandra :
 
-    tail -f logs/system.log
+    tail -f tail -f /workspace/Cassandra_Migration_Cassandra_4.x/apache-cassandra-3.11.16/logs/system.log
     
 
 ✅ Vérification que le noeud Cassandra 3.x est bien lancé :
