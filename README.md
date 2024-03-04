@@ -135,9 +135,15 @@ Cela lancera Cassandra comme user Linux authentifié.
 
 ### Création d'un keyspace et d'une table, puis insertion de données :
 
-✅ On lance une session de shel CQL :
+✅ On installa CQLSH :
+
+    pip install -U cqlsh
+
+
+✅ On lance une session de shell CQL :
 
     bin/cqlsh
+
 
 ✅ On créée ensuite le keyspace:
 
