@@ -218,15 +218,15 @@ Cela lancera Cassandra comme user Linux authentifié.
      state        | name          | population
     --------------+---------------+------------
      Pennsylvania |  Philadelphia |    1590402
-     New York | New York City |    8622357
-     Arizona |       Phoenix |    1743469
-     Illinois |       Chicago |    2670406
-     California |   Los Angeles |    4085014
-     California |     San Diego |    1469490
-     California |      San Jose |    1036242
-     Texas |        Dallas |    1400337
-     Texas |       Houston |    2378146
-     Texas |   San Antonio |    1579504
+     New York     | New York City |    8622357
+     Arizona      |       Phoenix |    1743469
+     Illinois     |       Chicago |    2670406
+     California   |   Los Angeles |    4085014
+     California   |     San Diego |    1469490
+     California   |      San Jose |    1036242
+     Texas        |        Dallas |    1400337
+     Texas        |       Houston |    2378146
+     Texas        |   San Antonio |    1579504
 
     (10 rows)
 
