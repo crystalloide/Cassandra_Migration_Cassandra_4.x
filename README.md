@@ -111,7 +111,7 @@ Cela lancera Cassandra comme user Linux authentifié.
 
 ✅ Vérification de la version de Cassandra (3.11.x attendu):
 
-    nodetool version
+    bin/nodetool version
 
 
 ✅ Affichage en retour : 
@@ -121,7 +121,7 @@ Cela lancera Cassandra comme user Linux authentifié.
 
 ✅ Vérification que le noeud Cassandra 3.11.x est bien opérationnel : 
 
-    nodetool status
+    bin/nodetool status
 
 ✅ Affichage en retour : 
 
@@ -137,7 +137,7 @@ Cela lancera Cassandra comme user Linux authentifié.
 
 ✅ On lance une session de shel CQL :
 
-    cqlsh
+    bin/cqlsh
 
 ✅ On créée ensuite le keyspace:
 
