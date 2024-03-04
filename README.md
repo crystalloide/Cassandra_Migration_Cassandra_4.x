@@ -38,6 +38,8 @@ _ Pour aller plus loin : [https://www.datastax.com/learn/whats-new-for-cassandra
 
     sdk install java 8.0.345.fx-zulu
 
+Remarque : faire "Y" pour que cette version devienne celle par défaut.
+
 
 ✅ Vérification de la version de Java : 
 
