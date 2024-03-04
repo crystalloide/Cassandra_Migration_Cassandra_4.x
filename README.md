@@ -139,7 +139,34 @@ Cela lancera Cassandra comme user Linux authentifié.
 
     pip install -U cqlsh
 
+    export PATH="/home/gitpod/.pyenv/bin:$PATH"
 
+    echo $PATH 
+
+    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
+    export PATH="$GITPOD_REPO_ROOT/capache-cassandra-3.11.16/bin:$PATH"
+    export PATH="$GITPOD_REPO_ROOT/apache-cassandra-3.11.16/tools/bin:$PATH"
+    
+    which python2 
+    
+    Python 2.7.18
+    
+Download Python 2.7.18 :
+
+    sudo apt-get install python2
+
+Extract the downloaded archive:
+tar xzvf Python-2.7.18.tgz
+
+Run the following script to install Python:
+cd Python-2.7.18
+./configure && make && make altinstall
+
+Create a syslink for Python from Python 2.7.18:
+cd /usr/local/bin
+ln -s python2.7 python
+
+    
 ✅ On lance une session de shell CQL :
 
     bin/cqlsh
