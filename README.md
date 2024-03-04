@@ -48,29 +48,29 @@ Remarque : faire "Y" pour que cette version devienne celle par défaut.
 
 ✅ Installation de cassandra 3.11.x : 
 
-Download the binary tarball from one of the mirrors on the Apache Cassandra Download site. 
+Téléchargement du tarball avec les binaires sur l'un des sites miroirs de la fondation Apache : 
 
     curl -OL https://downloads.apache.org/cassandra/3.11.16/apache-cassandra-3.11.16-bin.tar.gz
 
     
-The mirrors only host the latest versions of each major supported release. To download an earlier version of Cassandra, visit the Apache Archives.
-
-OPTIONAL: Verify the integrity of the downloaded tarball using one of the methods here. For example, to verify the hash of the downloaded file using GPG:
+Vérification de l'intégrité du tarball ainsi téléchargé avec le hash en utilisant GPG : 
 
     gpg --print-md SHA256 apache-cassandra-3.11.16-bin.tar.gz
     
-Compare the signature with the SHA256 file from the Downloads site:
+Comparaison de la signature du fichier Tarball avec le contenu du fichier SHA256 récupéré en ligne :
 
     curl -L https://downloads.apache.org/cassandra/3.11.16/apache-cassandra-3.11.16-bin.tar.gz.sha256
 
 
-Unpack the tarball:
+Décompression du tarball:
 
     tar xzvf apache-cassandra-3.11.16-bin.tar.gz
     
-The files will be extracted to the apache-cassandra-3.11/ directory. This is the tarball installation location.
+Les ficheirs sont extraits dnas le répertoire apache-cassandra-3.11.16/
 
-Located in the tarball installation location are the directories for the scripts, binaries, utilities, configuration, data and log files:
+Cela correspond donc au "tarball installation location".
+
+Dans ce répertoire d'installation, on retrouve les sous-répertoires contenant : les scripts, binaires, utilitaires, fichiers de configuration, data et fichiers de log :
 
     <tarball_installation>/
     bin/		
@@ -88,48 +88,41 @@ Located in the tarball installation location are the directories for the scripts
     location of cassandra.yaml and other configuration files
     location of the commit logs, hints, and SSTables
     location of system and debug logs <5>location of cassandra-stress tool
-    For information on how to configure your installation, see Configuring Cassandra.
+   
 
 
 ✅ Lancement de Cassandra : 
 
     cd apache-cassandra-3.11.16/ && bin/cassandra
     
-This will run Cassandra as the authenticated Linux user.
+Cela lancera Cassandra comme user Linux authentifié.
 
-✅ Monitor the progress of the startup with:
-
-    tail -f logs/system.log
-    
-You can monitor the progress of the startup with:
+✅ Suivi du lancement de Cassandra :
 
     tail -f logs/system.log
     
-For information on how to configure your installation, see Configuring Cassandra.
 
-✅ Verify that a Cassandra 3.x node is running :
-
-Check the status of Cassandra:
+✅ Vérification que le noeud Cassandra 3.x est bien lancé :
 
     bin/nodetool status
 
-✅ Verify that the Cassandra version is 3.x:
+
+✅ Vérification de la version de Cassandra (3.11.x attendu):
 
     nodetool version
 
+
 ✅ Affichage en retour : 
 
-    gitpod /workspace/cassandra4-migrating-from-cassandra3 (main) $ nodetool version
-    ReleaseVersion: 3.11.14
+    ReleaseVersion: 3.11.16
 
-✅ Verify that the Cassandra 3.x node is running:
+
+✅ Vérification que le noeud Cassandra 3.11.x est bien opérationnel : 
 
     nodetool status
 
 ✅ Affichage en retour : 
 
-    gitpod /workspace/cassandra4-migrating-from-cassandra3 (main) $ nodetool status
-    
     Datacenter: datacenter1
     =======================
     Status=Up/Down
@@ -138,22 +131,21 @@ Check the status of Cassandra:
     UN  127.0.0.1  70.87 KiB  256          100.0%            b10d4523-769e-41d4-aaaf-721ed30f4a22  rack1
     
 
-### Create a keyspace and table, and insert data
+### Création d'un keyspace et d'une table, puis insertion de données :
 
-In this step, you will create a keyspace and table, and populate them with some data.
-
-✅ Start the CQL shell:
+✅ On lance une session de shel CQL :
 
     cqlsh
 
-✅ Create the keyspace:
+✅ On créée ensuite le keyspace:
 
     CREATE KEYSPACE united_states 
     WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
 
     USE united_states;
 
-✅ Create the table:
+
+✅ On créée enfin la table :
 
     CREATE TABLE cities_by_state (
     state text,
@@ -162,7 +154,7 @@ In this step, you will create a keyspace and table, and populate them with some 
     PRIMARY KEY ((state), name)
     );
 
-✅ Insert the top 10 largest U.S. cities by population:
+✅ On insère les données sur les 10 plus importantes villes par état des US en terme de population :
 
     INSERT INTO cities_by_state (state, name, population) 
       VALUES ('New York','New York City',8622357);
@@ -185,7 +177,7 @@ In this step, you will create a keyspace and table, and populate them with some 
     INSERT INTO cities_by_state (state, name, population) 
       VALUES ('California','San Jose',1036242);
 
-✅ Verify that the data has been loaded:
+✅ On vérifie que les données ont bien été chargées :
 
     SELECT * FROM cities_by_state;
 
@@ -210,9 +202,10 @@ In this step, you will create a keyspace and table, and populate them with some 
     (10 rows)
 
 
-✅ Retrieve all the cities in California:
+✅ On extrait les données des villes situées en California:
 
     SELECT * FROM cities_by_state WHERE state = 'California';
+
 
 ✅ Affichage en retour : 
 
@@ -227,31 +220,25 @@ In this step, you will create a keyspace and table, and populate them with some 
     (3 rows)
 
 
-✅ Exit the CQL shell and clear the screen:
+✅ On sort du shell CQL et on efface l'écran :
 
     exit
     clear
 
 
-✅ You have loaded the data, continue to the next step.
+✅ Vérification que le noeud est prêt pour la montée de version :
 
-✅ Verify that the node is ready to be upgraded
+## Il y a 9 points à regarder pour s'assurer que tout est prêt : 
 
-✅ In this step, we will verify that the Cassandra 3.x cluster is ready to be upgraded. 
-
-## There are nine factors to consider:
-
-### 1. Current state
+### 1. Statut actuel des noeuds : 
    
-All nodes in the cluster need to be in the ‘Up and Normal’ state. 
-
-Check that there are no nodes in the cluster that are in a state different to Up and Normal.
-
-✅ Verify that all nodes have the UN state:
+✅ Vérification que tous les noeuds sont à l'état "UN" (Up et Normal) :
 
     nodetool status 
+
     
-    gitpod /workspace/cassandra4-migrating-from-cassandra3 (main) $ nodetool status 
+✅ Affichage en retour : 
+
     Datacenter: datacenter1
     =======================
     Status=Up/Down
@@ -260,9 +247,9 @@ Check that there are no nodes in the cluster that are in a state different to Up
     UN  127.0.0.1  93.26 KiB  256          100.0%            b10d4523-769e-41d4-aaaf-721ed30f4a22  rack1
     
 
-### 2. Disk space
+### 2. Espace disque : 
 
-✅ Verify that each node has at least 50% diskspace free:
+✅ Vérification que chaque noeud a au moins 50% d'espace libre :
 
     df -h
 
@@ -285,15 +272,15 @@ Check that there are no nodes in the cluster that are in a state different to Up
 
 
 
-### 3. Errors
+### 3. Absence d'erreur dans les logs : 
 
-✅ Verify that there are no unresolved errors (also, check for warnings) in the log:
+✅ Vérification qu'il n'y a pas d'erreurs non traitées (et aussi de warnings) :
 
     grep -e "WARN" -e "ERROR" cassandra3/logs/system.log
     
+    
 ✅ Affichage en retour : 
 
-    gitpod /workspace/cassandra4-migrating-from-cassandra3 (main) $ grep -e "WARN" -e "ERROR" cassandra3/logs/system.log
     WARN  [main] 2023-04-30 09:23:34,134 DatabaseDescriptor.java:503 - Small commitlog volume detected at cassandra3/bin/../data/commitlog; setting commitlog_total_space_in_mb to 7680.  You can override this in cassandra.yaml
     WARN  [main] 2023-04-30 09:23:34,135 DatabaseDescriptor.java:530 - Small cdc volume detected at cassandra3/bin/../data/cdc_raw; setting cdc_total_space_in_mb to 3840.  You can override this in cassandra.yaml
     WARN  [main] 2023-04-30 09:23:34,657 DatabaseDescriptor.java:579 - Only 29.747GiB free across all data volumes. Consider adding more capacity to your cluster or removing obsolete snapshots
@@ -310,11 +297,12 @@ Check that there are no nodes in the cluster that are in a state different to Up
 
 
 
-### 4. Gossip stability
+### 4. Etat du Gossiping :
 
-✅ Verify that all entries in the gossip information output have the gossip state STATUS:NORMAL: Check if there are any nodes that have a status other than NORMAL:
+✅ Vérification que toutes les informations listées dans le report Gossipingont un statut normal (STATUS:NORMAL)
 
     nodetool gossipinfo
+
 
 ✅ Affichage en retour : 
 
@@ -337,9 +325,10 @@ Check that there are no nodes in the cluster that are in a state different to Up
 
 
 
-✅ Check for any records that have a status other than NORMAL:
+✅ On regarde donc s'il n'y a pas un autre statut présent que "NORMAL" :
 
     nodetool gossipinfo | grep STATUS | grep -v NORMAL
+
     
 ✅ Affichage en retour : 
 
@@ -347,15 +336,15 @@ Check that there are no nodes in the cluster that are in a state different to Up
     gitpod /workspace/cassandra4-migrating-from-cassandra3 (main) $ 
 
 
-### 5. Dropped messages
+### 5. Vérification de l'absence de messages "Dropped" récemment : 
 
-✅ Verify that there were no dropped messages in the past 72 hours:
+✅ On regarde pour les 72 heures passées :
 
     nodetool tpstats | grep -A 12 Dropped
+
     
 ✅ Affichage en retour : 
 
-    gitpod /workspace/cassandra4-migrating-from-cassandra3 (main) $ nodetool tpstats | grep -A 12 Dropped
     Message type           Dropped
     READ                         0
     RANGE_SLICE                  0
@@ -370,81 +359,77 @@ Check that there are no nodes in the cluster that are in a state different to Up
     READ_REPAIR                  0
 
 
-### 6. Backup disabled
+### 6. Vérification que les Backups ont bie nété désactivés : 
 
-Verify that all automatic backups have been disabled.
+On vérifie que tous les backups automatiques sont désactivés.
 
-This includes disabling Medusa and any scripts that call nodetool snapshot until the upgrade is complete.
-
-
-### 7. Repair disabled
-
-Verify that repairs have been disabled. 
-
-This includes disabling automated repairs in Reaper.
+Ceci englobe Medusa et n'importe quel script appelant "nodetool snapshot" tant que la montée de version n'est pas terminée.
 
 
-### 8. Monitoring
+### 7. Vérification que les "Repair" sont désactivés :
 
-Upgrading may result in a temporary reduction in performance, as it simulates a series of temporary node failures. 
+On vérifie que tous les repairs sont désactivés.
 
-Understanding how the upgrade impacts the performance of the system, both during and after, is crucial when working through the process.
-
-
-### 9. Availability
-
-Confirm that areas of the application that require strong consistency are using the LOCAL_QUORUM consistency level and the replication factor of 3.
-
-When LOCAL_QUORUM is used with a replication factor below 3, all replicas must be available for requests to succeed. 
-
-A rolling restart using this configuration will result in full or partial unavailability while a node is DOWN.
-
-You are now ready to begin the upgrade.
+Ceci englobe les repairs automatiques définis dans Reaper.
 
 
-## Prepare the node for migration
+### 8. Niveau de performance / Monitoring :
 
-In this step, we will prepare the Cassandra 3.x cluster for the upgrade.
+La montée de version se traduit par une baisse temporaire de la performance, du fait que cela se traduit par une succession d'arrêt temporaire de chacun des noeuds. 
 
-✅ Take a snapshot of the node in case you need to roll back the upgrade (nodetool snapshot also flushes the memtables to disk):
+Il est donc ncessaire d'anticiper l'impact de la montée de version (de type "rolling upgrade") sur les performances du systeme, avant et après la migration.
+
+
+### 9. Disponibilité : 
+
+Vérification que les applications qui nécessitent une forte cohérence utilisent bien le niveau de cohérence (CL) à LOCAL_QUORUM et le facteur de réplication de 3.
+
+Lorsque LOCAL_QUORUM est utilisé avec un facteur de réplication inférieur à 3, tous les réplicas doivent être disponibles pour que les requêtes aboutissent.
+
+Un redémarrage progressif utilisant cette configuration entraînerait une indisponibilité totale ou partielle lorsqu'un nœud est DOWN.
+
+
+## Préparation du nœud pour la migration :
+
+
+✅ Prise d'un snapshot du noeud qui sera utilisé en cas de rollback suite à la migration :
+
+   Rappel : "nodetool snapshot" va flusher les memtables sur dique
 
     nodetool snapshot
+
     
 ✅ Affichage en retour : 
 
-    gitpod /workspace/cassandra4-migrating-from-cassandra3 (main) $ nodetool snapshot
     Requested creating snapshot(s) for [all keyspaces] with snapshot name [1682847408083] and options {skipFlush=false}
     Snapshot directory: 1682847408083
 
 
-✅ Stop the node by finding the PID and calling kill:
+✅ Arrêt du noeud en recherchant son PID puis en passant la commande "kill" :
 
     pgrep -u gitpod -f cassandra | xargs kill -9
+
 
 ✅ Affichage en retour : 
 
     gitpod /workspace/cassandra4-migrating-from-cassandra3 (main) $ pgrep -u gitpod -f cassandra | xargs kill -9
 
 
-✅ Use nodetool to verify that the node has been shut down:
+✅ Utilisation de la commande "nodetool" pour vérifier que le noeud a bien été arrêté : 
 
     nodetool status
     
 ✅ Affichage en retour : 
 
-    gitpod /workspace/cassandra4-migrating-from-cassandra3 (main) $ nodetool status
     nodetool: Failed to connect to '127.0.0.1:7199' - ConnectException: 'Connection refused (Connection refused)'.
 
-The node has been shutdown. Continue to the next step.
+
+## Installation de Cassandra 4.1.x :
 
 
-## Installation de Cassandra 4.x :
+✅ Download and install Cassandra 4.1.x:
 
-In this step, you will dowanload and unpack the Cassandra 4.1.4 distribution.
-
-✅ Download and install Cassandra 4.x:
-
-    wget https://archive.apache.org/dist/cassandra/4.1.4/apache-cassandra-4.1.4-bin.tar.gz
+    wget https://dlcdn.apache.org/cassandra/4.1.4/apache-cassandra-4.1.4-bin.tar.gz
 
     tar -xzf apache-cassandra-4.1.4-bin.tar.gz
 
@@ -453,8 +438,7 @@ In this step, you will dowanload and unpack the Cassandra 4.1.4 distribution.
     mv apache-cassandra-4.1.4 cassandra4
 
 ✅ Affichage en retour : 
-    
-    gitpod /workspace/cassandra4-migrating-from-cassandra3 (main) $ wget https://archive.apache.org/dist/cassandra/4.1.4/apache-cassandra-4.1.4-bin.tar.gz
+
 
     Connecting to archive.apache.org (archive.apache.org)|138.201.131.134|:443... connected.
     HTTP request sent, awaiting response... 200 OK
