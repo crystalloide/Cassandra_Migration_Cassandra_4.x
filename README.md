@@ -66,7 +66,7 @@ Décompression du tarball:
 
     tar xzvf apache-cassandra-3.11.16-bin.tar.gz
     
-Les ficheirs sont extraits dnas le répertoire apache-cassandra-3.11.16/
+Les fichiers sont extraits dans le répertoire apache-cassandra-3.11.16/
 
 Cela correspond donc au "tarball installation location".
 
@@ -93,7 +93,9 @@ Dans ce répertoire d'installation, on retrouve les sous-répertoires contenant 
 
 ✅ Lancement de Cassandra : 
 
-    cd apache-cassandra-3.11.16/ && bin/cassandra
+    cd /workspace/Cassandra_Migration_Cassandra_4.x/apache-cassandra-3.11.16
+    
+    bin/cassandra
     
 Cela lancera Cassandra comme user Linux authentifié.
 
