@@ -13,7 +13,7 @@ Par conséquent, les étapes comportent des notes décrivant le travail *supplé
 **********************************************************************************************************************************
 ## Dans ce TP, nous allons :
 
-- Installer (option1) ou Démarrer (option2) un cluster Cassandra 3.x à nœud unique
+- Installer puis démarrer un cluster Cassandra 3.x à nœud unique
 - Créer un schéma et y insérer des données
 - Préparer le nœud pour la migration
 - Installer Cassandra 4.x
