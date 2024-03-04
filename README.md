@@ -58,8 +58,8 @@ Remarque : faire "Y" pour que cette version devienne celle par défaut.
 ✅ Mise à jour du Path : 
    
     echo $PATH
-    export PATH="$GITPOD_REPO_ROOT/apache-cassandra-3.11.16/bin:$PATH"
-    export PATH="$GITPOD_REPO_ROOT/apache-cassandra-3.11.16/tools/bin:$PATH"
+    export PATH="$GITPOD_REPO_ROOT/apache-cassandra-3/bin:$PATH"
+    export PATH="$GITPOD_REPO_ROOT/apache-cassandra-3/tools/bin:$PATH"
     echo $PATH 
 
 
@@ -107,10 +107,14 @@ Dans ce répertoire d'installation, on retrouve les sous-répertoires contenant 
     location of system and debug logs <5>location of cassandra-stress tool
    
 
+    rm apache-cassandra-3.11.16-bin.tar.gz
+
+    mv apache-cassandra-3.11.16 cassandra3
+
 
 ✅ Lancement de Cassandra : 
 
-    cd /workspace/Cassandra_Migration_Cassandra_4.x/apache-cassandra-3.11.16
+    cd /workspace/Cassandra_Migration_Cassandra_4.x/cassandra3
     
     bin/cassandra
     
@@ -118,7 +122,7 @@ Cela lancera Cassandra comme user Linux authentifié.
 
 ✅ Suivi du lancement de Cassandra :
 
-    tail -f tail -f /workspace/Cassandra_Migration_Cassandra_4.x/apache-cassandra-3.11.16/logs/system.log
+    tail -f tail -f /workspace/Cassandra_Migration_Cassandra_4.x/cassandra3/logs/system.log
     
 
 ✅ Vérification que le noeud Cassandra 3.x est bien lancé :
@@ -301,7 +305,7 @@ Cela lancera Cassandra comme user Linux authentifié.
 
 ✅ Vérification qu'il n'y a pas d'erreurs non traitées (et aussi de warnings) :
 
-    grep -e "WARN" -e "ERROR" cassandra3/logs/system.log
+    grep -e "WARN" -e "ERROR" /workspace/Cassandra_Migration_Cassandra_4.x/cassandra3/logs/system.log
     
     
 ✅ Affichage en retour : 
@@ -454,6 +458,8 @@ Un redémarrage progressif utilisant cette configuration entraînerait une indis
 
 ✅ Download and install Cassandra 4.1.x:
 
+    cd /workspace/Cassandra_Migration_Cassandra_4.x/
+    
     wget https://dlcdn.apache.org/cassandra/4.1.4/apache-cassandra-4.1.4-bin.tar.gz
 
     tar -xzf apache-cassandra-4.1.4-bin.tar.gz
@@ -461,6 +467,7 @@ Un redémarrage progressif utilisant cette configuration entraînerait une indis
     rm apache-cassandra-4.1.4-bin.tar.gz
 
     mv apache-cassandra-4.1.4 cassandra4
+    
 
 ✅ Affichage en retour : 
 
@@ -485,7 +492,7 @@ Un redémarrage progressif utilisant cette configuration entraînerait une indis
 
 
 
-✅ Update the PATH variable:
+✅ Mise à jour des variables du PATH :
 
     export PATH="$GITPOD_REPO_ROOT/cassandra4/bin:$PATH"
     export PATH="$GITPOD_REPO_ROOT/cassandra3/tools/bin:$PATH"
@@ -496,18 +503,18 @@ Un redémarrage progressif utilisant cette configuration entraînerait une indis
     /bin:$PATH"
     gitpod /workspace/cassandra4-migrating-from-cassandra3 (main) $ export PATH="$GITPOD_REPO_ROOT/cassandra3/tools/bin:$PATH"
 
-## Lancement de Cassandra 4.x :
+## Lancement de Cassandra 4.1.x :
 
-In this step, you will configure cassandra.yaml and start Cassandra 4.x.
+Configuration de cassandra.yaml puis démarrage de Cassandra 4.1.x.
 
-✅ Change the number of virtual nodes to 256 since the 3.x node had 256 and the 4.x node is set to 16 by default. 
+✅ On change le nombre de virtual nodes à 256 puisqu'en version Cassandra 3.x, il y avait 256 VNodes par défaut et qu'il y en a désormais 16 par défaut en Cassandra 4.x : 
 
-Set num_tokens to 256 in Cassandra 4.x:
+Changement du paramètre "num_tokens" à 256 dans le fichier cassandra.yaml Cassandra 4.x :
 
     sed -i 's/num_tokens: 16/num_tokens: 256/' cassandra4/conf/cassandra.yaml
 
 
-✅ Point the Cassandra 4.x node to the Cassandra 3.x node data files:
+✅ On fait pointer le noeud Cassandra 4.x vers les répertoires de données utilisés en version 3.x :
 
     sed -i 's|# data_file_directories:|data_file_directories:|' cassandra4/conf/cassandra.yaml
     
@@ -515,13 +522,13 @@ Set num_tokens to 256 in Cassandra 4.x:
 
 
 
-✅ Start the Cassandra 4.x node:
+✅ Démarrage du noeud Cassandra 4.1.x :
 
     cassandra
 
-Look for the state "jump to NORMAL" message to indicate that the node is running.
+On attend le message de bon démarrage : "state jump to NORMAL" 
 
-
+    grep -e "state jump to NORMAL" /workspace/Cassandra_Migration_Cassandra_4.x/cassandra4/logs/system.log
 
 ✅ Clear the screen :
 
@@ -542,21 +549,20 @@ Look for the state "jump to NORMAL" message to indicate that the node is running
     UN  127.0.0.1  161.73 KiB  256     100.0%            b10d4523-769e-41d4-aaaf-721ed30f4a22  rack1
 
 
-## Verify that the node has been successfully migrated
+## Vérification que le noeud est correctement migré :
 
-In this step, you will verify that the Cassandra node has been upgraded and that the data is still available.
 
-✅ Verify that the Cassandra version is 4.x:
+✅ Vérification de la version du noeud en exécution : 
 
     nodetool version
     
 ✅ Affichage en retour : 
 
     nodetool version
-    ReleaseVersion: 4.0.5
+    ReleaseVersion: 4.1.4
 
 
-✅ Verify that the node is in the UP and NORMAL (UN) state:
+✅ Vérification de l'état du noeud "UP and NORMAL" (UN) :
 
     nodetool status
 
@@ -570,20 +576,22 @@ In this step, you will verify that the Cassandra node has been upgraded and that
     UN  127.0.0.1  161.73 KiB  256     100.0%            b10d4523-769e-41d4-aaaf-721ed30f4a22  rack1
 
     
-✅ Verify that there are no errors:
+✅ Vérification de l'absence d'erreurs :
 
     grep -e "WARN" -e "ERROR" cassandra4/logs/system.log
 
 
-✅ Start the CQL shell:
+✅ Lancemetn d'une session CQLsh :
 
+    export PATH="$GITPOD_REPO_ROOT/cassandra3/bin:$PATH"
+    
     cqlsh
 
-✅ Use the keyspace:
+✅ On sélectionne notre keyspace:
 
     USE united_states;
 
-✅ Verify that the data is accessible:
+✅ Et on vérifie que les données sont accessibles :
 
     SELECT * FROM cities_by_state;
 
@@ -616,5 +624,5 @@ In this step, you will verify that the Cassandra node has been upgraded and that
 
 
 **********************************************************************************************************************************
-## Fin du TP - Migration du cluster 3.11.x en cluster 4.x
+## Fin du TP - Migration du cluster 3.11.x en cluster 4.1.x
 **********************************************************************************************************************************
