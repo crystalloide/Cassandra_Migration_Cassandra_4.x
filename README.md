@@ -58,12 +58,8 @@ Remarque : faire "Y" pour que cette version devienne celle par défaut.
 ✅ Mise à jour du Path : 
    
     echo $PATH
-    
-    export PATH="/home/gitpod/.pyenv/bin:$PATH"
-    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
-    export PATH="$GITPOD_REPO_ROOT/capache-cassandra-3.11.16/bin:$PATH"
+    export PATH="$GITPOD_REPO_ROOT/apache-cassandra-3.11.16/bin:$PATH"
     export PATH="$GITPOD_REPO_ROOT/apache-cassandra-3.11.16/tools/bin:$PATH"
-
     echo $PATH 
 
 
