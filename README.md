@@ -85,7 +85,12 @@ Décompression du tarball:
     
 Les fichiers sont extraits dans le répertoire apache-cassandra-3.11.16/
 
-Cela correspond donc au "tarball installation location".
+
+    rm apache-cassandra-3.11.16-bin.tar.gz
+
+    mv apache-cassandra-3.11.16 cassandra3
+
+Le répertoire "cassandra3" correspond donc au "tarball installation location".
 
 Dans ce répertoire d'installation, on retrouve les sous-répertoires contenant : les scripts, binaires, utilitaires, fichiers de configuration, data et fichiers de log :
 
@@ -107,9 +112,6 @@ Dans ce répertoire d'installation, on retrouve les sous-répertoires contenant 
     location of system and debug logs <5>location of cassandra-stress tool
    
 
-    rm apache-cassandra-3.11.16-bin.tar.gz
-
-    mv apache-cassandra-3.11.16 cassandra3
 
 
 ✅ Lancement de Cassandra : 
