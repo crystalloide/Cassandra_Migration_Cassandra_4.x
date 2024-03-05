@@ -1,7 +1,7 @@
 **********************************************************************************************************************************
-# Migration de Cassandra 3.11.x vers 4.x
+# Migration de Cassandra 3.11.x vers 4.1.x
 **********************************************************************************************************************************
-## Principe et réalisation d'une migration d'un cluster Apache Cassandra de la version 3.11.x vers la version 4.x :
+## Principe et réalisation d'une migration d'un cluster Apache Cassandra de la version 3.11.x vers la version 4.1.x :
 **********************************************************************************************************************************
 
 Pour simplifier ici, on effectuera une migration d'un cluster *à nœud unique*. 
@@ -58,8 +58,8 @@ Remarque : faire "Y" pour que cette version devienne celle par défaut.
 ✅ Mise à jour du Path : 
    
     echo $PATH
-    export PATH="$GITPOD_REPO_ROOT/apache-cassandra-3/bin:$PATH"
-    export PATH="$GITPOD_REPO_ROOT/apache-cassandra-3/tools/bin:$PATH"
+    export PATH="$GITPOD_REPO_ROOT/cassandra3/bin:$PATH"
+    export PATH="$GITPOD_REPO_ROOT/cassandra3/tools/bin:$PATH"
     echo $PATH 
 
 
@@ -124,7 +124,7 @@ Cela lancera Cassandra comme user Linux authentifié.
 
 ✅ Suivi du lancement de Cassandra :
 
-    tail -f tail -f /workspace/Cassandra_Migration_Cassandra_4.x/cassandra3/logs/system.log
+    tail -f /workspace/Cassandra_Migration_Cassandra_4.x/cassandra3/logs/system.log
     
 
 ✅ Vérification que le noeud Cassandra 3.x est bien lancé :
